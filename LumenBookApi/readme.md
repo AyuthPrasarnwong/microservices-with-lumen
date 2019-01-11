@@ -16,6 +16,9 @@ To start the application and run the containers in the background, use following
 ```bash
 docker-compose up -d
 ```
+
+To stop all containers, use following command inside project root:
+
 ```bash
 docker-compose down
 ```
