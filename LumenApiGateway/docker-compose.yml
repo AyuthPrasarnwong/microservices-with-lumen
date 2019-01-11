@@ -1,0 +1,73 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: faizanbashir/php
+    container_name: lumen-api-gateway-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./docker-compose/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - default
+      - lumenauthorapi_author-ms-network
+      - lumenbookapi_book-ms-network
+    external_links:
+      - author-ms-webserver:api-author.lumen.loc
+      - book-ms-webserver:api-book.lumen.loc
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: lumen-api-gateway-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8085:80"
+    volumes:
+      - .:/var/www
+      - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - default
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: lumen-api-gateway-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33065:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - default
+
+#Docker Networks
+networks:
+  default:
+    driver: bridge
+  lumenauthorapi_author-ms-network:
+    external: true
+  lumenbookapi_book-ms-network:
+    external: true
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local

@@ -29,6 +29,7 @@ trait ConsumeExternalService
             'form_params' => $formParams,
             'headers'     => $headers,
         ]);
+
         return $response->getBody()->getContents();
     }
 }
