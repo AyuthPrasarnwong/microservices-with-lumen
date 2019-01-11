@@ -1,21 +1,59 @@
-# Lumen PHP Framework
+Get Started
+-----------
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+#### Requirements
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+To run this application on your machine, you need at least:
 
-## Official Documentation
+* docker
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+Run the docker for development:
+---------------------
+First you need to copy `.env.example` to `.env` for setup environment of appplication
 
-## Security Vulnerabilities
+To start the application and run the containers in the background, use following command inside project root:
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+```bash
+docker-compose up -d
+```
+```bash
+docker-compose down
+```
 
-## License
+Installing Dependencies via Composer
+------------------------------------
+Run the composer installer:
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+docker exec -it author-ms-app composer install
+```
+or
+```bash
+docker exec -it author-ms-app composer update
+```
+
+Database Setup
+------------------------------------
+Run the migration artisan command:
+```bash
+docker exec -it author-ms-db bash  
+mysql -u root -p
+GRANT ALL ON laravel.* TO 'homestead'@'%' IDENTIFIED BY 'secret';
+FLUSH PRIVILEGES;
+EXIT;
+docker exec -it author-ms-app php artisan migrate:refresh --seed
+```
+
+Map the domain
+------------------------------------
+Open the hosts file on your local machine `/etc/hosts`.
+```bash
+127.0.0.1  api-author.lumen.loc
+```
+
+Running Application
+------------------------------------
+Open the browser
+```bash
+http://api-author.lumen.loc:8066
+```

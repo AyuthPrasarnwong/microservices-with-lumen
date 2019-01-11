@@ -8,4 +8,12 @@
  
   Also stopping direct access to the microservices, to access the microservies directly
   the client must pass some kind of token which is registered in the microservice. 
- 
+  
+Get Started
+-----------
+
+#### Requirements
+
+To run this application on your machine, you need at least:
+
+* docker
