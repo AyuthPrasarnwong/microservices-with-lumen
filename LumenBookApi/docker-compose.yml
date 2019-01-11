@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: faizanbashir/php
+    image: enro/php7.2
     container_name: book-ms-app
     restart: unless-stopped
     tty: true

@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: faizanbashir/php
+    image: enro/php7.2
     container_name: lumen-api-gateway-app
     restart: unless-stopped
     tty: true
@@ -32,7 +32,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "8085:80"
+      - "8080:80"
     volumes:
       - .:/var/www
       - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "33065:3306"
+      - "33080:3306"
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: your_mysql_root_password
